@@ -3,84 +3,257 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجري الإلكتروني</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>متجر الأواني المنزلية</title>
+    <style>
+        /* CSS هنا نضع أكواد الـ */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        header {
+            background: #8B4513; /* لون خشبي */
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            background: #A0522D;
+        }
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 1rem;
+            justify-content: center;
+        }
+        .product {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            width: 220px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .product:hover {
+            transform: translateY(-5px);
+        }
+        .product img {
+            max-width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        button {
+            background: #8B4513;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #A0522D;
+        }
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background: #8B4513;
+            color: white;
+            margin-top: 1rem;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>متجري الإلكتروني 🛒</h1>
+        <h1>متجر الأواني المنزلية 🍳</h1>
         <nav>
-            <a href="index.html">الرئيسية</a>
-            <a href="products.html">المنتجات</a>
-            <a href="cart.html">سلة التسوق (0)</a>
+            <a href="#" onclick="showPage('home')">الرئيسية</a>
+            <a href="#" onclick="showPage('products')">المنتجات</a>
+            <a href="#" onclick="showPage('cart')">سلة التسوق (<span id="cart-count">0</span>)</a>
         </nav>
     </header>
 
-    <main>
-        <section class="products">
-            <div class="product">
-                <img src="https://via.placeholder.com/150" alt="منتج 1">
-                <h3>منتج 1</h3>
-                <p>50 ريال</p>
-                <button onclick="addToCart('منتج 1', 50)">أضف إلى السلة</button>
+    <main id="main-content">
+        <!-- الصفحة الرئيسية -->
+        <section id="home-page" class="page">
+            <h2>مرحبًا بكم في متجر الأواني المنزلية!</h2>
+            <p>اكتشفوا مجموعة مميزة من الأواني والأدوات المطبخية بجودة عالية.</p>
+            <img src="https://images.unsplash.com/photo-1583778176476-4a8b02a64c01?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="أواني منزلية" style="max-width:100%; border-radius:8px; margin-top:1rem;">
+        </section>
+
+        <!-- صفحة المنتجات -->
+        <section id="products-page" class="page" style="display:none;">
+            <h2 style="text-align:center;">أوانينا المميزة</h2>
+            <div class="products">
+                <!-- منتج 1 -->
+                <div class="product">
+                    <img src="https://images.unsplash.com/photo-1514327605112-b887c0e61c0a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="طقم صحون">
+                    <h3>طقم صحون سيراميك</h3>
+                    <p>12 قطعة - ألوان متنوعة</p>
+                    <p><strong>120 ريال</strong></p>
+                    <button onclick="addToCart('طقم صحون سيراميك', 120)">أضف إلى السلة</button>
+                </div>
+
+                <!-- منتج 2 -->
+                <div class="product">
+                    <img src="https://images.unsplash.com/photo-1592078615290-033ee584e267?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="قدور ستانلس ستيل">
+                    <h3>طقم قدور ستانلس ستيل</h3>
+                    <p>5 قطع - مقاوم للصدأ</p>
+                    <p><strong>250 ريال</strong></p>
+                    <button onclick="addToCart('طقم قدور ستانلس ستيل', 250)">أضف إلى السلة</button>
+                </div>
+
+                <!-- منتج 3 -->
+                <div class="product">
+                    <img src="https://images.unsplash.com/photo-1571805618149-3a772570eb4d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="أكواب زجاجية">
+                    <h3>أكواب زجاجية</h3>
+                    <p>6 قطع - عازلة للحرارة</p>
+                    <p><strong>80 ريال</strong></p>
+                    <button onclick="addToCart('أكواب زجاجية', 80)">أضف إلى السلة</button>
+                </div>
+
+                <!-- منتج 4 -->
+                <div class="product">
+                    <img src="https://images.unsplash.com/photo-1595457812090-6c77173a1d0a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="مقلاة تيفال">
+                    <h3>مقلاة تيفال غير لاصقة</h3>
+                    <p>28 سم - مع غطاء</p>
+                    <p><strong>95 ريال</strong></p>
+                    <button onclick="addToCart('مقلاة تيفال غير لاصقة', 95)">أضف إلى السلة</button>
+                </div>
+
+                <!-- منتج 5 -->
+                <div class="product">
+                    <img src="https://images.unsplash.com/photo-1588854337236-6889d631faa8?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="طقم سكاكين">
+                    <h3>طقم سكاكين مطبخ</h3>
+                    <p>6 قطع - فولاذ مقاوم للصدأ</p>
+                    <p><strong>150 ريال</strong></p>
+                    <button onclick="addToCart('طقم سكاكين مطبخ', 150)">أضف إلى السلة</button>
+                </div>
+
+                <!-- منتج 6 -->
+                <div class="product">
+                    <img src="https://images.unsplash.com/photo-1604176354204-9268737828e4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="إبريق شاي">
+                    <h3>إبريق شاي سيراميك</h3>
+                    <p>سعة 1 لتر - مع مصفاة</p>
+                    <p><strong>65 ريال</strong></p>
+                    <button onclick="addToCart('إبريق شاي سيراميك', 65)">أضف إلى السلة</button>
+                </div>
             </div>
-            <!-- المزيد من المنتجات -->
+        </section>
+
+        <!-- صفحة سلة التسوق -->
+        <section id="cart-page" class="page" style="display:none;">
+            <h2 style="text-align:center;">سلة التسوق</h2>
+            <div id="cart-items">
+                <!-- العناصر تضاف هنا بالجافاسكريبت -->
+                <p>السلة فارغة حالياً.</p>
+            </div>
+            <div id="cart-total" style="text-align:center; margin:1rem 0; font-size:1.2rem;">
+                <strong>المجموع: 0 ريال</strong>
+            </div>
+            <div style="text-align:center;">
+                <button onclick="checkout()" style="padding:0.8rem 2rem;">إتمام الشراء</button>
+            </div>
         </section>
     </main>
 
     <footer>
-        <p>© 2023 متجري الإلكتروني</p>
+        <p>© 2023 متجر الأواني المنزلية | تواصل معنا: info@example.com</p>
     </footer>
 
-    <script src="js/script.js"></script>
+    <script>
+        // JavaScript هنا نضع أكواد الـ 
+        let cart = [];
+
+        // إضافة منتج إلى السلة
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            updateCart();
+            alert(`تمت إضافة ${name} إلى السلة!`);
+        }
+
+        // تحديث السلة والعناصر
+        function updateCart() {
+            // تحديث العداد
+            document.getElementById('cart-count').textContent = cart.length;
+
+            // تحديث صفحة السلة إن كانت ظاهرة
+            const cartItemsElement = document.getElementById('cart-items');
+            const cartTotalElement = document.getElementById('cart-total');
+
+            if (cart.length === 0) {
+                cartItemsElement.innerHTML = '<p>السلة فارغة حالياً.</p>';
+                cartTotalElement.innerHTML = '<strong>المجموع: 0 ريال</strong>';
+                return;
+            }
+
+            // عرض العناصر في السلة
+            cartItemsElement.innerHTML = '';
+            let total = 0;
+            cart.forEach((item, index) => {
+                total += item.price;
+                const itemElement = document.createElement('div');
+                itemElement.className = 'cart-item';
+                itemElement.innerHTML = `
+                    <span>${item.name} - ${item.price} ريال</span>
+                    <button onclick="removeFromCart(${index})">حذف</button>
+                `;
+                cartItemsElement.appendChild(itemElement);
+            });
+
+            // عرض المجموع
+            cartTotalElement.innerHTML = `<strong>المجموع: ${total} ريال</strong>`;
+        }
+
+        // حذف منتج من السلة
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        // إتمام الشراء (وهمي)
+        function checkout() {
+            if (cart.length === 0) {
+                alert('السلة فارغة!');
+                return;
+            }
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            alert(`شكراً لشرائك! الطلب بقيمة ${total} ريال سيتم شحنه خلال 3 أيام.`);
+            cart = [];
+            updateCart();
+            showPage('home');
+        }
+
+        // تبديل الصفحات
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.style.display = 'none';
+            });
+            document.getElementById(`${pageId}-page`).style.display = 'block';
+        }
+    </script>
 </body>
 </html>
-let cart = [];
-
-function addToCart(name, price) {
-    cart.push({ name, price });
-    updateCartCount();
-    alert(`تمت إضافة ${name} إلى السلة!`);
-}
-
-function updateCartCount() {
-    const cartCount = document.querySelector('nav a[href="cart.html"]');
-    cartCount.textContent = `سلة التسوق (${cart.length})`;
-}
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f9f9f9;
-}
-
-header {
-    background: #2c3e50;
-    color: white;
-    padding: 1rem;
-    text-align: center;
-}
-
-.products {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    padding: 1rem;
-}
-
-.product {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 1rem;
-    width: 200px;
-    text-align: center;
-}
-
-button {
-    background: #3498db;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-}
