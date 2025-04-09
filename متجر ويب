@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجري الإلكتروني</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>متجري الإلكتروني 🛒</h1>
+        <nav>
+            <a href="index.html">الرئيسية</a>
+            <a href="products.html">المنتجات</a>
+            <a href="cart.html">سلة التسوق (0)</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="products">
+            <div class="product">
+                <img src="https://via.placeholder.com/150" alt="منتج 1">
+                <h3>منتج 1</h3>
+                <p>50 ريال</p>
+                <button onclick="addToCart('منتج 1', 50)">أضف إلى السلة</button>
+            </div>
+            <!-- المزيد من المنتجات -->
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2023 متجري الإلكتروني</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
+let cart = [];
+
+function addToCart(name, price) {
+    cart.push({ name, price });
+    updateCartCount();
+    alert(`تمت إضافة ${name} إلى السلة!`);
+}
+
+function updateCartCount() {
+    const cartCount = document.querySelector('nav a[href="cart.html"]');
+    cartCount.textContent = `سلة التسوق (${cart.length})`;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+header {
+    background: #2c3e50;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+.products {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.product {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    width: 200px;
+    text-align: center;
+}
+
+button {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
