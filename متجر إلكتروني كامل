@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر الأواني المنزلية</title>
+    <style>
+        /* CSS هنا نضع أكواد الـ */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        header {
+            background: #8B4513;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            background: #A0522D;
+        }
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 1rem;
+            justify-content: center;
+        }
+        .product {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            width: 220px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .product:hover {
+            transform: translateY(-5px);
+        }
+        .product img {
+            max-width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        button {
+            background: #8B4513;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #A0522D;
+        }
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background: #8B4513;
+            color: white;
+            margin-top: 1rem;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        /* تنسيقات صفحة تسجيل الدخول */
+        .login-form {
+            max-width: 400px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .login-form input {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .login-form button {
+            width: 100%;
+            padding: 0.8rem;
+        }
+        .user-info {
+            text-align: center;
+            margin: 1rem;
+            font-weight: bold;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>متجر الأواني المنزلية 🍳</h1>
+        <div id="user-info" class="user-info"></div>
+        <nav id="main-nav">
+            <a href="#" onclick="showPage('home')">الرئيسية</a>
+            <a href="#" onclick="showPage('products')">المنتجات</a>
+            <a href="#" onclick="showPage('cart')">سلة التسوق (<span id="cart-count">0</span>)</a>
+            <a href="#" onclick="showPage('login')" id="login-btn">تسجيل الدخول</a>
+            <a href="#" onclick="logout()" id="logout-btn" style="display:none;">تسجيل الخروج</a>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <!-- الصفحة الرئيسية -->
+        <section id="home-page" class="page">
+            <h2>مرحبًا بكم في متجر الأواني المنزلية!</h2>
+            <p>اكتشفوا مجموعة مميزة من الأواني والأدوات المطبخية بجودة عالية.</p>
+            <img src="https://images.unsplash.com/photo-1583778176476-4a8b02a64c01?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="أواني منزلية" style="max-width:100%; border-radius:8px; margin-top:1rem;">
+        </section>
+
+        <!-- صفحة المنتجات -->
+        <section id="products-page" class="page" style="display:none;">
+            <h2 style="text-align:center;">أوانينا المميزة</h2>
+            <div class="products">
+                <!-- منتجات موجودة مسبقًا -->
+            </div>
+        </section>
+
+        <!-- صفحة سلة التسوق -->
+        <section id="cart-page" class="page" style="display:none;">
+            <h2 style="text-align:center;">سلة التسوق</h2>
+            <div id="cart-items">
+                <p>السلة فارغة حالياً.</p>
+            </div>
+            <div id="cart-total" style="text-align:center; margin:1rem 0; font-size:1.2rem;">
+                <strong>المجموع: 0 ريال</strong>
+            </div>
+            <div style="text-align:center;">
+                <button onclick="checkout()" style="padding:0.8rem 2rem;">إتمام الشراء</button>
+            </div>
+        </section>
+
+        <!-- صفحة تسجيل الدخول -->
+        <section id="login-page" class="page" style="display:none;">
+            <div class="login-form">
+                <h2 style="text-align:center;">تسجيل الدخول</h2>
+                <form onsubmit="event.preventDefault(); login()">
+                    <input type="email" id="login-email" placeholder="البريد الإلكتروني" required>
+                    <input type="password" id="login-password" placeholder="كلمة المرور" required>
+                    <button type="submit">دخول</button>
+                </form>
+                <p style="text-align:center; margin-top:1rem;">
+                    ليس لديك حساب؟ <a href="#" onclick="showPage('register')">سجل هنا</a>
+                </p>
+            </div>
+        </section>
+
+        <!-- صفحة التسجيل -->
+        <section id="register-page" class="page" style="display:none;">
+            <div class="login-form">
+                <h2 style="text-align:center;">إنشاء حساب جديد</h2>
+                <form onsubmit="event.preventDefault(); register()">
+                    <input type="text" id="register-name" placeholder="الاسم الكامل" required>
+                    <input type="email" id="register-email" placeholder="البريد الإلكتروني" required>
+                    <input type="password" id="register-password" placeholder="كلمة المرور" required>
+                    <button type="submit">تسجيل</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2023 متجر الأواني المنزلية | تواصل معنا: info@example.com</p>
+    </footer>
+
+    <script>
+        // JavaScript هنا نضع أكواد الـ 
+        let cart = [];
+        let users = [
+            { email: "admin@example.com", password: "123456", name: "مدير المتجر" }
+        ];
+        let currentUser = null;
+
+        // تحميل البيانات عند بدء التشغيل
+        function loadData() {
+            const savedCart = localStorage.getItem('cart');
+            if (savedCart) cart = JSON.parse(savedCart);
+            
+            const savedUsers = localStorage.getItem('users');
+            if (savedUsers) users = JSON.parse(savedUsers);
+            
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) currentUser = JSON.parse(savedUser);
+            
+            updateCart();
+            updateUserUI();
+        }
+
+        // تحديث واجهة المستخدم
+        function updateUserUI() {
+            const userInfoElement = document.getElementById('user-info');
+            const loginBtn = document.getElementById('login-btn');
+            const logoutBtn = document.getElementById('logout-btn');
+            
+            if (currentUser) {
+                userInfoElement.textContent = `مرحبًا، ${currentUser.name}`;
+                loginBtn.style.display = 'none';
+                logoutBtn.style.display = 'block';
+            } else {
+                userInfoElement.textContent = '';
+                loginBtn.style.display = 'block';
+                logoutBtn.style.display = 'none';
+            }
+        }
+
+        // تسجيل الدخول
+        function login() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                currentUser = user;
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                alert(`تم تسجيل الدخول بنجاح! مرحبًا ${user.name}`);
+                showPage('home');
+                updateUserUI();
+            } else {
+                alert('البريد الإلكتروني أو كلمة المرور غير صحيحة!');
+            }
+        }
+
+        // تسجيل الخروج
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            updateUserUI();
+            showPage('home');
+        }
+
+        // تسجيل حساب جديد
+        function register() {
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            
+            if (users.some(u => u.email === email)) {
+                alert('هذا البريد الإلكتروني مسجل بالفعل!');
+                return;
+            }
+            
+            users.push({ email, password, name });
+            localStorage.setItem('users', JSON.stringify(users));
+            alert('تم إنشاء الحساب بنجاح! يمكنك تسجيل الدخول الآن.');
+            showPage('login');
+        }
+
+        // بقية الدوال (addToCart, updateCart, removeFromCart, checkout, showPage) تبقى كما هي
+        // ... [يتم وضع نفس دوال السلة السابقة هنا] ...
+
+        // تحميل البيانات عند بدء التشغيل
+        window.onload = loadData;
+    </script>
+</body>
+</html>
